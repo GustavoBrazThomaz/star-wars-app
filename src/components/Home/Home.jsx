@@ -15,34 +15,50 @@ import 'swiper/css/scrollbar';
 import Characters from './Characters/Characters'
 
 function Home() {
-
+  
+  //States
   const [films, setFilms] = useState([])
   const [width, setWidth] = useState('')
   const [carousel, setCarousel] = useState(3)
+  const [caractersCarousel , setCaractersCarousel] = useState(4)
   const [status, setStatus] = useState([])
   const [removeLoading, setRemoveLoading] = useState(false)
 
-  const updateWidth = () => {
-    setWidth(window.innerWidth)
-  }
-
+  //Hooks
   useEffect(() => {
     API.get('/films').then(res => {
       if(res.status === 200)setRemoveLoading(true)
       setStatus(res.status)
       setFilms(res.data.results)
     })
+    document.title = 'Star Wars App'
   }, [])  
 
   useEffect(() => {
     setWidth(window.screen.width)
     window.addEventListener('resize', updateWidth)
-    if(width >= 1024)setCarousel(3)
-    if(width <= 1024)setCarousel(2)
-    if(width <= 678)setCarousel(1)
+    if(width >= 1024){
+      setCarousel(3) 
+      setCaractersCarousel(4)
+    }
+    if(width <= 1024){
+      setCarousel(2)
+      setCaractersCarousel(3)
+    }
+    if(width <= 678){
+      setCarousel(1)
+      setCaractersCarousel(2)
+    }
   }, [width])
 
-  const card = { height: '600px' ,background: '#424242', margin: 5, borderRadius: 30}
+  // Métodos 
+  const updateWidth = () => {
+    setWidth(window.innerWidth)
+  }
+
+  // React Css
+  const card = { height: '600px' ,background: '#424242', margin: 5}
+
   return (
     <>
     {status === 200 &&
@@ -71,13 +87,13 @@ function Home() {
                         {title}
                       </Typography>
                       <Typography variant="body2">
-                        Data de Lançamento: {release_date}<br />
-                        Produtor: {producer}<br />
+                        Release Date: {release_date}<br />
+                        Producer: {producer}<br />
                         Director: {director}
                       </Typography>
                     </CardContent>
                     <CardActions style={{display: 'flex', justifyContent: 'center'}}>
-                      <Button variant="contained" color="primary" size="small"><Link style={{ textDecoration: 'none'}} to={`/Filmes/${episode_id}`}>Ver Detalhes</Link></Button>
+                      <Button variant="contained" color="primary" size="small"><Link style={{ textDecoration: 'none'}} to={`/Filmes/${episode_id}`}>See Details</Link></Button>
                     </CardActions>
                   </Card>
               </SwiperSlide>
@@ -85,7 +101,9 @@ function Home() {
             }
        </Swiper>
        <Typography style={{margin: 40}} variant='h4' color="primary" align='center'>Personagens</Typography>
-            <Characters/>
+            <Characters 
+              caractersCarousel={caractersCarousel}
+            />
       </Container>
     }
       {!removeLoading && 

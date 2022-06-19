@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Hubballi&display=swap');
 
 body{
   background-image: url('../public/static//images/background-starWars.png')
@@ -7,9 +6,4 @@ body{
 .navbar{
   background-image: linear-gradient(180deg, rgb(0, 0, 0), #030303be);
 
-}
-
-.logo{
-  font-size: 2rem;
-  font-family: 'Hubballi', cursive;
 }
