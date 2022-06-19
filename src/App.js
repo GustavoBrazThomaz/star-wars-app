@@ -1,24 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import Home from './components/Home/Home';
+import Films from './components/Films/Films';
+import { createTheme, ThemeProvider, } from '@mui/material/styles'
+import { amber, grey } from '@mui/material/colors';
+import { AppBar, Toolbar, Typography } from '@mui/material';
+
 
 function App() {
+
+  const theme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: amber,
+      secondary: grey
+    }
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <AppBar color='transparent'>
+          <Toolbar className='navbar'>
+            <Link to='/' style={{ textDecoration: 'none' }}><Typography className='logo' color="primary">Star Wars App  </Typography></Link>
+          </Toolbar>
+        </AppBar>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/Filmes/:id' element={<Films />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 
