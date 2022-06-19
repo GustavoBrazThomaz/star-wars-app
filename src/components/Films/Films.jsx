@@ -97,6 +97,7 @@ function Films() {
     if (characters !== undefined) {
       setTest(characters)
     }
+    setAtt(false)
   }, [characters])
 
   // Métodos
